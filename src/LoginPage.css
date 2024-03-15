@@ -1,0 +1,145 @@
+/* LoginPage.css */
+
+.login-container {
+    background-color: #4c5a67;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    max-width: 400px;
+    padding: 2em;
+    text-align: center;
+    margin: auto;
+    
+  }
+  
+  
+  
+  .form-group {
+    margin-bottom: 1em;
+  }
+  
+  .form-group label {
+    display: block;
+    text-align: left;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+    margin-top: 0.25em;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .login-button {
+    background-color: #00aaff;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .login-button:hover {
+    background-color: #0088cc;
+  }
+  
+  .error {
+    background-color: #ffdddd;
+    color: #cc0000;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+  }
+  
+  /* Additional styles for the inputs to match the design */
+  input[type="text"],
+  input[type="password"] {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 0.75em 1em;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  /* Style the placeholders to match the design */
+  ::placeholder {
+    color: #888888;
+  }
+  /* LoginPage.css */
+/* Styling the login container */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4c5a67;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    width: 400px; /* Set fixed width */
+    padding: 2em;
+    text-align: center;
+    opacity: 75%;
+}
+
+/* Styling the logo */
+.tafbot-icon {
+    max-width: 300px; /* Increase the max-width for a larger logo */
+    margin-bottom: 1em;
+}
+
+/* Rest of your CSS */
+/* LoginPage.css */
+
+/* Styling the login container */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4c5a67;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    width: 400px; /* Set fixed width */
+    padding: 2em;
+    text-align: center;
+}
+
+/* Styling the logo */
+.tafbot-icon {
+    max-width: 200px; /* Decrease the max-width for a smaller logo */
+    margin-bottom: 1em;
+}
+
+/* Styling the login button */
+.login-button {
+    background-color: #73acc9;
+    color: white;
+    padding: 0.3em 0.6em; /* Adjust padding for a smaller button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%; /* Adjust width as needed */
+    box-sizing: border-box;
+    margin-top: 1em; /* Increase margin-top to create space between button and input */
+}
+
+.login-button:hover {
+    background-color: #1d272b;
+}
+
+/* Rest of your CSS */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('C:\Users\uig37078\interfata\src\assets\fundal.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+  }

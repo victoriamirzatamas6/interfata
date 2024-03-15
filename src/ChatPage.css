@@ -1,0 +1,301 @@
+/* Stiluri pentru .chat-page */
+.chat-page {
+  display: flex;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Stiluri pentru .sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  
+}
+
+/* Stiluri pentru butoanele din .sidebar */
+.sidebar-button {
+  padding: 10px;
+  margin: 10px 0;
+  color: white;
+  cursor: pointer;
+  background-color: #222;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px
+  
+}
+
+/* Stiluri pentru .sidebar-lower */
+.sidebar-lower {
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+
+/* Stiluri pentru imagini în containerul de logout și light mode */
+.logout-container img,
+.light-mode img {
+  width: 30px;
+  height: 30px;
+  
+}
+
+/* Stiluri pentru .chat-container */
+.chat-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #282c34;
+  color: white;
+}
+
+/* Stiluri pentru .chat-header */
+.chat-header {
+  padding: 20px;
+  font-size: 1.5em;
+  background-color: #20232a;
+}
+
+/* Stiluri pentru .chat-messages */
+.chat-messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Stiluri pentru .message */
+.message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  background-color: #3a3b3c;
+}
+
+/* Stiluri pentru .message.user */
+.message.user {
+  align-self: flex-end;
+}
+
+/* Stiluri pentru .chat-footer */
+.chat-footer {
+  padding: 20px;
+  background-color: #20232a;
+  display: flex;
+}
+
+/* Stiluri pentru input-ul din .chat-footer */
+.chat-footer input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+/* Stiluri pentru butonul din .chat-footer */
+.chat-footer button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #363839;
+  color: #f3f3f5;
+  cursor: pointer;
+  border-radius: 15px
+}
+
+/* Stiluri pentru a asigura alinierea textului butonului cu icon-urile vertical */
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  opacity: 50%;
+  border-radius: 10px; /* Adăugăm un border-radius pentru a rotunji marginile */
+  max-width: 200px;
+  opacity: 50%;
+}
+
+/* Stiluri pentru butonul de light mode cu icon */
+.light-mode {
+  gap: 5px;
+  border-radius: 15px;
+}
+
+/* Stiluri pentru butonul de logout cu icon */
+.logout-container {
+  gap: 5px;
+}
+
+/* Stilurile pentru icon-ul de light mode și logout */
+.light-mode-icon,
+.log-out-icon {
+  width: 100px; /* Dimensiunea icon-ului poate fi ajustată */
+  height: 100px; /* Dimensiunea icon-ului poate fi ajustată */
+}
+
+/* Ajustează stilurile pentru hover-ul butoanelor din sidebar */
+.sidebar-button:hover {
+  background-color: #444;
+}
+
+
+/* Stiluri pentru butonul de back to welcome page */
+.logout-container {
+  gap: 5px;
+  border-radius: 10px; /* Adăugăm un border-radius pentru a rotunji marginile */
+  max-width: 200px;
+  opacity: 50%;
+  
+  
+}
+
+.delete-icon {
+  width: 30px; /* Ajustează dimensiunea icon-ului după nevoie */
+  height: 30px;
+  margin-right: 8px; /* Asigură un spațiu între icon și text */
+}
+.new-chat-icon {
+  width: 30px; /* Ajustează dimensiunea icon-ului după nevoie */
+  height: 30px;
+  margin-right: 8px; /* Asigură un spațiu între icon și text */
+}
+.tafbot-icon {
+  width: 30px; /* Ajustează dimensiunea imaginii după nevoie */
+  height: 30px;
+  margin-right: 10px; /* Asigură un spațiu între imagine și text */
+}
+.saved-conversations {
+  margin-top: 20px;
+}
+
+.saved-conversations h3 {
+  margin-bottom: 10px;
+}
+
+.saved-conversations ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.saved-conversations li {
+  margin-bottom: 5px;
+}
+
+.saved-conversations button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.saved-conversations button:hover {
+  background-color: #e0e0e0;
+}
+.user-logo {
+  width: 20px; /* Ajustați dimensiunea logo-ului în funcție de necesități */
+  height: 20px;
+  margin-right: 5px; /* Asigurați un spațiu între logo și textul mesajului */
+}  
+
+.separator {
+  border-top: 1px solid #ccc; /* Linia de sus */
+  border-bottom: 1px solid #ccc; /* Linia de jos */
+  margin: 8px 0; /* Adaugă un pic de spațiu înainte și după separator */
+  height: 10px; /* Înălțimea totală a separatorului, ajustează conform necesităților */
+}
+
+.bot-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+.sidebar-button {
+  padding: 10px;
+  margin: 10px 0;
+  color: white;
+  cursor: pointer;
+  background-color: #222;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-button:hover {
+  background-color: #444; /* Schimbați culoarea la hover pentru a îmbunătăți feedback-ul vizual */
+}
+
+.separator {
+  border-top: 1px solid #555; /* Asigurați-vă că separatorul este vizibil */
+  margin: 20px 0;
+}
+
+/* Stilizare specifică pentru titlurile conversațiilor salvate */
+.saved-conversation {
+  color: #aaa; /* O culoare mai deschisă pentru a distinge între acțiunile obișnuite și conversațiile salvate */
+  font-style: italic;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.saved-conversation:hover {
+  background-color: #383838; /* O culoare de fundal la hover pentru a îmbunătăți accesibilitatea */
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* sau absolute */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* fundal negru semitransparent */
+  color: white;
+  z-index: 10; /* asigură-te că se află peste alte elemente */
+}
+
+// ChatPage.css
+/* Add the following styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Or the desired height */
+  justify-content: space-between;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center messages vertically */
+  justify-content: flex-end; /* Messages start from bottom */
+  overflow-y: auto;
+  margin: 0 auto;
+  width: 150%; /* Set to desired max width */
+  max-width: 1000px; /* Or the desired width */
+  height: calc(100% - 120px); /* Adjust based on the height of your header/footer */
+  background: #111010; /* Black background for the chat area */
+}
+
+.message {
+  max-width: 80%; /* Set to desired width */
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #353434; /* Light background for user message */
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: #333; /* Dark background for bot message */
+  color: white; /* White text for readability */
+}
