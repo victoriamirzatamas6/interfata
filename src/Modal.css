@@ -1,0 +1,165 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  background: #135f39; /* Fundal verde-albastru */
+  padding: 40px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 450px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: white; /* Text alb pentru contrast adecvat */
+  transform: translateY(-20px);
+  animation: modalRise 0.3s forwards;
+}
+
+@keyframes modalRise {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal label {
+  margin-bottom: 8px;
+  color: #ffffff; /* Text alb pentru label-uri */
+  font-weight: 500;
+}
+
+.modal input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ffffff; /* Fundal alb pentru input-uri */
+  color: #333; /* Text negru pentru citire ușoară */
+  transition: border-color 0.3s ease-in-out;
+}
+
+.modal input:focus {
+  border-color: #007bff; /* Culoare la focus */
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25); /* Efect de glow discret */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-around; /* Distribuie butoanele uniform */
+  gap: 10px; /* Adaugă un spațiu între butoane */
+  margin-top: 20px; /* Spațiu deasupra pentru separare de câmpurile formularului */
+}
+
+.modal-footer button {
+  padding: 8px 12px; /* Padding redus pentru butoane mai mici */
+  width: auto; /* Ajustează lățimea în funcție de conținut */
+  background-color: #256894; /* Culoare mov pentru butoane */
+  color: #ffffff; /* Text alb pentru butoane */
+  border: none; /* Fără bordură pentru un look modern */
+  border-radius: 5px; /* Rotunjire ușoară pentru buton */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem; /* Font mai mic pentru butoane */
+}
+
+.modal-footer button:hover {
+  background-color: #2a2994; /* Nuanță de mov mai închisă la hover */
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-around; /* Distribuie butoanele uniform */
+  gap: 10px; /* Adaugă un spațiu între butoane */
+  margin-top: 20px; /* Spațiu deasupra pentru separare de câmpurile formularului */
+}
+
+/* Se aplică pentru toate butoanele din .modal-footer */
+.modal-footer button {
+  padding: 8px 12px; /* Padding redus pentru butoane mai mici */
+  min-width: 100px; /* Stabilește o lățime minimă pentru butoane */
+  background-color: #6a0dad; /* Culoare mov pentru butoane */
+  color: #ffffff; /* Text alb pentru butoane */
+  border: none; /* Fără bordură pentru un look modern */
+  border-radius: 5px; /* Rotunjire ușoară pentru buton */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem; /* Font mai mic pentru butoane */
+}
+
+.modal-footer button:hover {
+  background-color: #7b1fa2; /* Nuanță de mov mai închisă la hover */
+}
+.modal-footer {
+  display: flex;
+  justify-content: center; /* Centrați butoanele */
+  gap: 10px; /* Adaugă un spațiu între butoane */
+  margin-top: 20px; /* Spațiu deasupra pentru separare de câmpurile formularului */
+}
+
+.modal-button {
+  padding: 8px 20px; /* Padding pentru dimensiuni reduse */
+  min-width: 120px; /* Lățime minimă pentru butoane */
+  background-color: #6a0dad; /* Culoare mov pentru butoane */
+  color: white; /* Text alb pentru contrast */
+  border: none; /* Fără bordură */
+  border-radius: 5px; /* Rotunjire ușoară pentru buton */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem; /* Font mai mic pentru butoane */
+  font-weight: 500; /* Font weight semibold pentru a se potrivi cu stilul label-urilor */
+  line-height: 1.5; /* Line height pentru o citire mai bună */
+}
+
+.modal-button:hover {
+  background-color: #7b1fa2; /* Nuanță de mov mai închisă la hover */
+}
+
+.modal-footer button:last-child {
+  background-color: #9b59b6; /* O altă nuanță de mov pentru variație */
+}
+.modal-footer {
+  display: flex;
+  justify-content: center; /* Centrarea butoanelor */
+  gap: 10px; /* Spațiu între butoane */
+  margin-top: 20px; /* Spațiu deasupra butoanelor */
+}
+
+.modal-button {
+  padding: 8px 20px; /* Dimensiuni mai mici pentru butoane */
+  min-width: 100px; /* Lățime minimă pentru toate butoanele */
+  background-color: #583c6b; /* Culoare mov pentru butonul Update */
+  color: white; /* Text alb pentru butonul Update */
+  border: none; /* Fără bordură pentru butoane */
+  border-radius: 5px; /* Rotunjire a colțurilor */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem; /* Font mai mic */
+  font-weight: 500; /* Greutate font */
+}
+
+.modal-button:hover {
+  background-color: #7b1fa2; /* Nuanță mai închisă la hover pentru butonul Update */
+}
+
+/* Stiluri specifice pentru butonul Close */
+.modal-footer button[type="button"] {
+  background-color: white; /* Fundal alb pentru butonul Close */
+  color: #333; /* Text negru pentru butonul Close */
+}

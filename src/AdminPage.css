@@ -1,0 +1,167 @@
+/* AdminPage.css */
+
+.admin-container {
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/034/040/583/original/animated-gradient-background-dark-style-color-smooth-motion-free-video.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.admin-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.username:hover::after {
+    background: #7db9e8; /* Light blue */
+}
+
+.logout-button, .new-user-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button:hover, .new-user-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.users-table-container {
+    width: 90%;
+    margin-top: 20px;
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th, .users-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.users-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.users-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.users-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.action-buttons button {
+    background-color: #17a2b8; /* Bootstrap's info color */
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.action-buttons button.edit {
+    background-color: #28a745; /* Bootstrap's success color */
+}
+
+.action-buttons button.delete {
+    background-color: #dc3545; /* Bootstrap's danger color */
+}
+
+.search-input {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border: 1px solid #007bff;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .admin-container, .users-table-container, .search-input {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .username, .logout-button, .new-user-button {
+        margin-bottom: 10px;
+    }
+}
+.users-table-container {
+    width: 90%;
+    margin-top: 20px;
+    overflow-y: auto; /* Permite defilarea verticală dacă conținutul depășește înălțimea containerului */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6); /* Fundal semi-transparent */
+    max-height: 750px; /* Înălțimea maximă pentru a afișa maxim 15 rânduri; ajustează conform nevoilor */
+}
+
+/* Stiluri generale pentru pagină */
+
+/* Butonul de Logout și New User */
+.logout-button, .new-user-button {
+    background-color: #ff4757; /* O culoare mai vibrantă pentru butoane */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adaugă o umbră pentru un efect 3D ușor */
+}
+
+.logout-button:hover, .new-user-button:hover {
+    background-color: #ff6b81; /* Schimbă culoarea la hover pentru feedback vizual */
+}
+
+/* Tabelul de utilizatori */
+.users-table th {
+    background-color: #485461; /* O culoare de fundal mai întunecată pentru header-ul tabelului */
+    color: #d7dadc; /* Text mai clar pentru contrast */
+}
+
+/* Îmbunătățirea inputului de căutare */
+.search-input {
+    padding: 10px;
+    margin-bottom: 20px; /* Spațiu suplimentar pentru aerisire */
+    width: calc(100% - 20px); /* Lățime completă cu padding */
+    border-radius: 20px; /* Borduri rotunjite pentru un aspect modern */
+    border: 1px solid #485461; /* Border care se potrivește cu tema */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Ajustări pentru ecrane mici */
+    .admin-container, .users-table-container {
+        flex-direction: column;
+    }
+
+    .users-table-container {
+        overflow-x: auto; /* Asigură-te că tabela este scrollabilă pe dispozitivele mici */
+    }
+}

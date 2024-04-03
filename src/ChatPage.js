@@ -10,91 +10,147 @@ import userLogo from './assets/user-logo.png';
 import botLogo from './assets/tafbot.png';
 
 function ChatPage() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
   
-  const [currentChat, setCurrentChat] = useState('TAFBot'); 
+  const [currentChat, setCurrentChat] = useState('TAFBot');
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false); // Noua stare pentru loading
+  const [isLoading, setIsLoading] = useState(false);
   const [savedConversations, setSavedConversations] = useState([]);
-  // Adăugăm o nouă stare pentru a urmări dacă utilizatorul a apăsat pe butonul de stop
   const [isStopped, setIsStopped] = useState(false);
-  // Adaugă o nouă stare pentru intervalul de simulare a tastării
   const [typingIntervalId, setTypingIntervalId] = useState(null);
-  
-  const restoreConversation = (conversation) => {
-    setMessages(conversation.messages);
-    setCurrentChat(conversation.chatName);
-  };
-  //let navigate = useNavigate();
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const [isTyping, setIsTyping] = useState(false);
 
+
+  const requestNotificationPermission = () => {
+    Notification.requestPermission().then(permission => {
+      console.log("Permission:", permission);
+      if (permission === "granted") {
+        new Notification("Allow Notifications", {
+          body: "Receiving notifications works!",
+          icon: tafbotImage
+        });
+      }
+    });
+  };
+  
+
+  const handleExportConversations = () => {
+    // Convertiți conversațiile într-un format CSV
+    const conversationCsv = messages.map(msg =>
+      `"${msg.sender === 'user' ? 'User' : 'TAFBot'}","${msg.text.replace(/"/g, '""')}"` // Dublați ghilimelele pentru a evita erorile în CSV
+    ).join('\n');
+  
+    // Crearea unui blob cu textul conversației în format CSV
+    const blob = new Blob([conversationCsv], { type: 'text/csv;charset=utf-8;' });
+  
+    // Crearea unui URL pentru descărcare
+    const url = URL.createObjectURL(blob);
+  
+    // Crearea unui element <a> temporar pentru a iniția descărcarea
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'conversation.csv'; // Numele fișierului
+    document.body.appendChild(a); // Adăugați elementul în document pentru a-l putea utiliza
+    a.click(); // Simulați un click pe element pentru a declanșa descărcarea
+  
+    // Curățați și eliminați elementul <a> după ce descărcarea a fost inițiată
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url); // Eliberați memoria URL-ului creat
+  };
+
+  useEffect(() => {
+    const btn = document.getElementById("request-permission-btn");
+    if (btn) {
+      btn.addEventListener("click", requestNotificationPermission);
+    }
+  
+    return () => {
+      if (btn) {
+        btn.removeEventListener("click", requestNotificationPermission);
+      }
+    };
+  }, []);
+  // State și ref-uri
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  // Restul state-urilor și ref-urilor rămân neschimbate
+
+  useEffect(() => {
+    // Cer permisiunea pentru notificări și ajustează scroll-ul
+    Notification.requestPermission();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      // Asigură-te că ultimul mesaj este de la bot și că este final (nu temporar)
+      if (lastMessage.sender === 'bot' && !lastMessage.temp && Notification.permission === "granted" && document.visibilityState === 'hidden') {
+        new Notification("TAFBot is typing a response...", {
+          body: lastMessage.text,
+          icon: tafbotImage
+        });
+      }
+    }
+  }, [messages]);
 
   const handleSendMessage = async () => {
     const trimmedInput = input.trim();
     if (trimmedInput && !isStopped) {
-      // Adaugă mesajul utilizatorului la chat
       setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user' }]);
-      setInput(''); // Golește input-ul
-      setIsLoading(true); // Începe încărcarea
-  
+      setInput('');
+      setIsLoading(true);
       try {
-        // Realizează cererea POST către server
         const response = await axios.post('http://10.198.82.154:8000/stream_chat', {
           content: trimmedInput,
           queries: messages.filter(m => m.sender === 'user').map(m => m.text),
           answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
         });
-  
-        setIsLoading(false); // Oprește încărcarea
-        const botMessage = response.data; // Prezumăm că răspunsul serverului este text simplu
-        
-        // Simulează tastarea răspunsului botului
+        setIsLoading(false);
+        const botMessage = response.data;
         simulateTyping(botMessage);
       } catch (error) {
-        setIsLoading(false); // Oprește încărcarea în cazul unei erori
+        setIsLoading(false);
         console.error('There was an error sending the message to the chatbot:', error);
-        // Afișează un mesaj de eroare în chat
         setMessages(prevMessages => [...prevMessages, { text: "Error: Could not connect to the chat service.", sender: 'bot' }]);
       }
     }
   };
 
+  
+  
   const simulateTyping = (botMessage) => {
-    setIsLoading(true); // Începe simularea (aceasta va schimba butonul în "Stop")
-
+    setIsTyping(true);
     let i = 0;
     const typingSpeed = 50;
-    const addTemporaryMessage = (text) => {
-      setMessages(prevMessages => {
-        const messagesWithoutTemporary = prevMessages.filter(m => !m.temp);
-        return [...messagesWithoutTemporary, { text, sender: 'bot', temp: true }];
+    if (typingIntervalId) clearInterval(typingIntervalId);
+  
+    // Verifică dacă pagina este în background la începutul simulării
+    // și trimite o notificare o singură dată
+    if (Notification.permission === "granted" && document.visibilityState === 'hidden') {
+      new Notification("TAFBot is typing a response...", {
+        icon: tafbotImage
       });
-    };
-
-    // Asigură-te că orice interval anterior este oprit înainte de a începe unul nou
-    if (typingIntervalId) {
-      clearInterval(typingIntervalId);
     }
   
     const newTypingIntervalId = setInterval(() => {
-      if (i <= botMessage.length) {
-        addTemporaryMessage(botMessage.substring(0, i));
+      if (i < botMessage.length) {
         i++;
+        setMessages(prevMessages => {
+          const messagesWithoutTemporary = prevMessages.filter(m => !m.temp);
+          return [...messagesWithoutTemporary, { text: botMessage.substring(0, i), sender: 'bot', temp: true }];
+        });
       } else {
         clearInterval(newTypingIntervalId);
-        setTypingIntervalId(null);
-        setMessages(prevMessages => prevMessages.filter(m => !m.temp).concat([{ text: botMessage, sender: 'bot' }]));
+        setIsTyping(false);
+        setMessages(prevMessages => {
+          return prevMessages.filter(m => !m.temp).concat({ text: botMessage, sender: 'bot' });
+        });
       }
     }, typingSpeed);
-
-    // Actualizează starea cu noul ID al intervalului
+  
     setTypingIntervalId(newTypingIntervalId);
   };
-  
   const handleBackToWelcome = () => {
     navigate('/');
   };
@@ -132,13 +188,16 @@ function ChatPage() {
     }
   };
   const handleStop = () => {
-    setIsLoading(false); // Oprește simularea și revine la starea inițială
-    if (typingIntervalId) {
-      clearInterval(typingIntervalId);
-      setTypingIntervalId(null);
+    if (isLoading) setIsLoading(false); // Stop loading if necessary
+    if (isTyping) {
+      setIsTyping(false); // Stop typing simulation
+      if (typingIntervalId) {
+        clearInterval(typingIntervalId);
+        setTypingIntervalId(null);
+      }
+      // Remove temporary messages to clear the conversation
+      setMessages(prevMessages => prevMessages.filter(m => !m.temp));
     }
-    // Elimină mesajele temporare pentru a curăța conversația
-    setMessages(prevMessages => prevMessages.filter(m => !m.temp));
   };
   useEffect(() => {
     if (input.length === 0) {
@@ -163,7 +222,10 @@ function ChatPage() {
       {conversation.title}
     </div>
   ))}
+  
         <div className="sidebar-lower">
+        <button id="request-permission-btn">Allow notifications</button>
+  <button onClick={handleExportConversations}>Export Conversations as CSV</button>
           <div className="sidebar-button logout-container" onClick={handleBackToWelcome}>
             <img src={logOutIcon} alt="Log out" className="log-out-icon" />
             Log out
@@ -212,14 +274,17 @@ function ChatPage() {
             placeholder={`Ask ${currentChat} a question...`}
             disabled={isLoading} // Dezactivează inputul în timpul încărcării
           />
-          <button onClick={isLoading ? handleStop : handleSendMessage}>
-  {isLoading ? 'Stop' : 'Send'}
+          <button onClick={(isLoading || isTyping) ? handleStop : handleSendMessage}>
+  {(isLoading || isTyping) ? 'Stop' : 'Send'}
 </button>
+
           
         </div>
       </div>
     </div>
   );
 }
+
+
 
 export default ChatPage;

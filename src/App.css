@@ -1,39 +1,178 @@
-.welcome-text,
-.additional-text {
-  opacity: 0; /* Textul va fi inițial invizibil */
-  transition: opacity 0.5s ease-in-out; /* Adaugă o tranzitie pentru opacitate */
-}
-
-.welcome-text.show,
-.additional-text.show {
-  opacity: 1; /* Asigură că textul este vizibil */
+.App {
+  text-align: center;
+  background-image: url('https://wallpapercave.com/wp/wp7620177.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .App-header {
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-header button {
+.logo {
+  max-width: 100%;
+  height: auto;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.App-header img {
+  width: auto;
+  height: 40vmin;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome-text,
+.additional-text,
+.start-button {
+  opacity: 0; /* Inițial, elementele sunt invizibile */
+  transform: translateY(20px);
+  animation: slideInUp 1s forwards; /* Utilizează 'forwards' pentru a menține starea finală */
+}
+
+.welcome-text.show {
+  animation-delay: 1.5s; /* Întârziere specifică pentru textul de welcome */
+}
+
+.additional-text.show {
+  animation-delay: 2.5s; /* Întârziere specifică pentru textul adițional */
+}
+
+.start-button {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  opacity: 1; /* Butonul va fi inițial invizibil */
-  transition: opacity 0.5s ease-in-out; /* Adaugă o tranzitie pentru opacitate */
+  background-color: #796615;
+  color: white;
+  border: none;
+  border-radius: 4px;
 }
 
-.App-header button.show {
-  opacity: 1; /* Asigură că butonul este vizibil */
+.start-button.show {
+  animation-delay: 3.5s; /* Întârziere specifică pentru buton */
+}
+
+.start-button:hover {
+  background-color: #b97433;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+/* Ajustări pentru responsivitate */
+@media (max-width: 768px) {
+  .App-header img {
+    height: 30vmin;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
+}
+.App-header img {
+  width: auto;
+  height: 37vmin;
+  animation: pulse 2s ease-in-out infinite;
+}
+.App-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Ajustează contentul să înceapă de sus */
+  height: 100%; /* Asigură-te că .App-header ocupă întreaga înălțime a părintelui său */
+}
+
+.App-header img {
+  margin-top: 10vh; /* Ajustează această valoare ca să controlezi cât de sus vrei logo-ul */
+  width: auto;
+  height: 37vmin;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.additional-text {
+  animation-delay: 2.5s;
+}
+
+.start-button {
+  margin-bottom: 20px; /* Ajustează spațiu în partea de jos dacă este necesar */
+  animation-delay: 3.5s;
 }
 
 
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.welcome-text,
+.additional-text,
+.start-button {
+  opacity: 0; /* Inițial, elementele sunt invizibile */
+  animation: slideInFromRight 1s forwards; /* Noua animație aplicată aici */
+}
+
+.welcome-text.show {
+  animation-delay: 1.5s; /* Întârziere specifică pentru textul de welcome */
+}
+
+.additional-text.show {
+  animation-delay: 2.5s; /* Întârziere specifică pentru textul adițional */
+}
+
+.start-button.show {
+  animation-delay: 3.5s; /* Întârziere specifică pentru buton */
+}
+
+/* Poziționarea textelor și butonului mai sus */
+.welcome-text,
+.additional-text {
+  margin-bottom: 5vh; /* Reducem spațiul de sub text pentru a-l aduce mai sus */
+}
+
+.start-button {
+  margin-bottom: 10vh; /* Ajustează acest spațiu pentru a controla cât de sus vrei butonul */
+}

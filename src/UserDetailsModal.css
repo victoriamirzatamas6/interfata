@@ -1,0 +1,127 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  background: #065c4e; /* Fundal verde-albastru */
+  padding: 40px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 450px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: white; /* Text alb pentru contrast adecvat */
+  transform: translateY(-20px);
+  animation: modalRise 0.3s forwards;
+}
+
+@keyframes modalRise {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal label {
+  margin-bottom: 8px;
+  color: #ffffff; /* Text alb pentru label-uri */
+  font-weight: 500;
+}
+
+.modal input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ffffff; /* Fundal alb pentru input-uri */
+  color: #333; /* Text negru pentru citire ușoară */
+  transition: border-color 0.3s ease-in-out;
+  margin-left: 20px; /* Împinge input-urile mai spre dreapta */
+}
+
+
+.modal input:focus {
+  border-color: #007bff; /* Culoare la focus */
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25); /* Efect de glow discret */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center; /* Uniformizează aliniamentul */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-button, .modal-footer button {
+  padding: 8px 20px; /* Unifică dimensiunile pentru padding */
+  min-width: 100px; /* Lățime minimă consistentă */
+  background-color: #0f8f7e; /* Culoare de fundal */
+  color: white; /* Text alb */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.modal-footer button[type="button"], .modal-footer button:last-child {
+  background-color: white; /* Fundal diferit pentru butonul Close */
+  color: #333; /* Text negru pentru Close */
+}
+
+.modal-button:hover, .modal-footer button:hover {
+  background-color: #113f42; /* Efect hover */
+}
+
+
+
+.modal-footer {
+  display: flex;
+  justify-content: center; /* Centrează butoanele */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-button, .modal-footer button {
+  padding: 8px 20px; /* Păstrează padding-ul pentru a menține înălțimea */
+  width: 150px; /* Stabilește o lățime specifică pentru toate butoanele */
+  background-color: #0f8f7e; /* Culoare de fundal comună pentru butoane */
+  color: white; /* Text alb */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.modal-footer button[type="button"], .modal-footer button:last-child {
+  background-color: #0f8f7e; /* Fundal diferit pentru butonul Close */
+  color: white; /* Text negru pentru Close */
+  width: 150px; /* Asigură că butonul Close are aceeași lățime ca celelalte butoane */
+}
+
+.modal-button:hover, .modal-footer button:hover {
+  background-color: #113f42; /* Efect hover */
+}
