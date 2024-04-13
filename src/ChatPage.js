@@ -8,6 +8,11 @@ import newChatIcon from './assets/newchat.png';
 import tafbotImage from './assets/tafbot.png';
 import userLogo from './assets/user-logo.png';
 import botLogo from './assets/tafbot.png';
+import FAQModal from './FAQModal'; // Adaugă această linie
+import faqIcon from './assets/faq-icon.png';
+import hotjar from '@hotjar/browser';
+import FeedbackForm from './FeedbackForm';
+
 
 function ChatPage() {
   
@@ -19,18 +24,156 @@ function ChatPage() {
   const [isStopped, setIsStopped] = useState(false);
   const [typingIntervalId, setTypingIntervalId] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [showFAQModal, setShowFAQModal] = useState(false);
+  // La începutul fișierului ChatPage.js
+  const hotjarId = process.env.REACT_APP_HOTJAR_ID;
+  const hotjarVersion = process.env.REACT_APP_HOTJAR_SNIPPET_VERSION;
+  const username = localStorage.getItem('username');
 
+useEffect(() => {
+  const hotjarId = process.env.REACT_APP_HOTJAR_ID; // Asigură-te că aceste variabile sunt setate corect în fișierul .env
+  const hotjarVersion = process.env.REACT_APP_HOTJAR_SNIPPET_VERSION; // De obicei versiunea este 6 pentru majoritatea utilizatorilor
+  if (hotjarId && hotjarVersion) {
+    hotjar.initialize(hotjarId, parseInt(hotjarVersion));
+  }
+}, []);
 
+  useEffect(() => {
+    const fetchChatHistory = async () => {
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        try {
+          const response = await axios.get('http://localhost:3000/chatHistory', {
+            headers: { Authorization: `Bearer ${authToken}` }
+          });
+          // Presupunând că răspunsul este un array de mesaje
+          setMessages(response.data);
+        } catch (error) {
+          console.error('Eroare la preluarea istoricului de chat:', error);
+        }
+      }
+    };
+  
+    fetchChatHistory();
+  }, [navigate]);
+
+ 
+  const saveMessages = async (userMessage, botMessage) => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) return;
+  
+    const messagesToSave = [
+      { message: userMessage, sender: 'user' },
+      { message: botMessage, sender: 'bot' }
+    ];
+  
+    try {
+      // Presupunem că serverul poate gestiona un array de mesaje primit
+      await axios.post('http://localhost:3000/saveMessage', messagesToSave, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+    } catch (error) {
+      console.error('Could not save messages:', error);
+    }
+  };
+  
   const requestNotificationPermission = () => {
     Notification.requestPermission().then(permission => {
       console.log("Permission:", permission);
       if (permission === "granted") {
-        new Notification("Allow Notifications", {
+        new Notification("Check Notifications", {
           body: "Receiving notifications works!",
           icon: tafbotImage
         });
       }
     });
+  };
+
+  // Salvarea mesajului utilizatorului și a răspunsului botului
+/*const saveMessages = async (userMessage, botMessage) => {
+  const authToken = localStorage.getItem('authToken');
+  if (!authToken) return;
+
+  // Construiește corpul cererii
+  const messagesToSave = [
+    { message: userMessage, sender: 'user' },
+    { message: botMessage, sender: 'bot' }
+  ];
+
+  try {
+    // Trimite o cerere POST pentru fiecare mesaj
+    for (let msg of messagesToSave) {
+      await axios.post('http://localhost:3000/saveMessage', msg, {
+        headers: { "Authorization": `Bearer ${authToken}` }
+      });
+    }
+  } catch (error) {
+    console.error('Could not save messages:', error);
+  }
+};*/
+
+
+  /*useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      fetchChatHistory(authToken); // Folosim tokenul pentru a face cererea de istoric
+    }
+  }, []); */
+  
+  /*useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      axios.get('http://localhost:3000/chatHistory', {
+        headers: {
+          "Authorization": `Bearer ${authToken}`
+        }
+      })
+      .then(response => {
+        setMessages(response.data); // Actualizează starea cu istoricul conversațiilor
+      })
+      .catch(error => console.error('Could not fetch chat history:', error));
+    }
+  }, []);
+  
+  */
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      // Utilizatorul nu este autentificat, deci navighează către pagina de autentificare
+      navigate('/login');
+    }
+  }, []);
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      // Setează header-ul global de autorizare pentru Axios
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+
+      // Continuă să încarci istoricul de chat sau alte date necesare
+      fetchChatHistory();
+    } else {
+      // Navighează către pagina de login dacă nu există un token JWT
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      navigate('/login');
+    } else {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+      fetchChatHistory();
+    }
+  }, [navigate]);
+
+  const fetchChatHistory = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/chatHistory');
+      setMessages(response.data || []);
+    } catch (error) {
+      console.error('Eroare la preluarea istoricului de chat:', error);
+    }
   };
   
 
@@ -94,7 +237,23 @@ function ChatPage() {
     }
   }, [messages]);
 
-  const handleSendMessage = async () => {
+  const sendMessage = async (message, sender) => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken && message.trim() !== '') {
+      try {
+        await axios.post('http://localhost:3000/saveMessage', 
+          { message, sender },
+          { headers: { "Authorization": `Bearer ${authToken}` } }
+        );
+      } catch (error) {
+        console.error('Could not save the message:', error);
+      }
+    }
+  };
+  
+  
+
+ /*const handleSendMessage = async () => {
     const trimmedInput = input.trim();
     if (trimmedInput && !isStopped) {
       setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user' }]);
@@ -115,9 +274,39 @@ function ChatPage() {
         setMessages(prevMessages => [...prevMessages, { text: "Error: Could not connect to the chat service.", sender: 'bot' }]);
       }
     }
-  };
+  };*/
 
+  const handleSendMessage = async () => {
+    const trimmedInput = input.trim();
+    if (trimmedInput && !isStopped) {
+      setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user' }]);
+      setInput('');
+      setIsLoading(true);
+      try {
+        const response = await axios.post('http://10.198.82.154:8000/stream_chat', {
+          content: trimmedInput,
+          queries: messages.filter(m => m.sender === 'user').map(m => m.text),
+          answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
+        });
+        setIsLoading(false);
+        const botMessage = response.data;
   
+        // Salvează mesajul utilizatorului și răspunsul botului
+        await saveMessages(trimmedInput, botMessage);
+  
+        simulateTyping(botMessage);
+      } catch (error) {
+        setIsLoading(false);
+        console.error('There was an error sending the message to the chatbot:', error);
+        setMessages(prevMessages => [...prevMessages, { text: "Error: Could not connect to the chat service.", sender: 'bot' }]);
+      }
+    }
+  };
+  
+
+
+
+
   
   const simulateTyping = (botMessage) => {
     setIsTyping(true);
@@ -151,11 +340,17 @@ function ChatPage() {
   
     setTypingIntervalId(newTypingIntervalId);
   };
-  const handleBackToWelcome = () => {
+  /*const handleBackToWelcome = () => {
     navigate('/');
   };
+*/
+  // Exemplu de funcție logout în componenta ta
+  const handleBackToWelcome = () => {
+  localStorage.removeItem('authToken'); // Elimină token-ul JWT
+  // Resetează orice stare relevantă / navighează utilizatorul către pagina de login
+  navigate('/login');
+};
 
-  
   
 
   const handleNewChat = () => {
@@ -221,17 +416,32 @@ function ChatPage() {
     <div key={conversation.id} className="sidebar-button" onClick={() => handleSelectConversation(conversation.id)}>
       {conversation.title}
     </div>
+    
+    
   ))}
   
+  
+  
         <div className="sidebar-lower">
-        <button id="request-permission-btn">Allow notifications</button>
+        
+        <button id="request-permission-btn">Check notifications</button>
   <button onClick={handleExportConversations}>Export Conversations as CSV</button>
           <div className="sidebar-button logout-container" onClick={handleBackToWelcome}>
             <img src={logOutIcon} alt="Log out" className="log-out-icon" />
             Log out
           </div>
+          
+          <FeedbackForm username={username} />
+
         </div>
+        <div className="sidebar-button" onClick={() => setShowFAQModal(true)}>
+  <img src={faqIcon} alt="FAQs" className="faq-icon" />
+  FAQs
+  </div>
+<FAQModal show={showFAQModal} onClose={() => setShowFAQModal(false)} />
+ 
       </div>
+      
       <div className="chat-container">
         <div className="chat-header">
           <img src={tafbotImage} alt="TAFBot" className="tafbot-icon" />

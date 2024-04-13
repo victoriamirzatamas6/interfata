@@ -30,6 +30,9 @@ function LoginPage() {
       setLoading(true); // Activăm animația de încărcare
       axios.post('http://localhost:3000/login', { username, password })
         .then(response => {
+          localStorage.setItem('authToken', response.data.token); // Salvăm token-ul JWT în local storage
+          localStorage.setItem('username', username); // Salvăm numele de utilizator pentru a fi utilizat mai târziu
+          //localStorage.setItem('authToken', response.data.token); // Salvăm token-ul
           setLoading(false); // Oprim animația de încărcare
           if (response.status === 200) {
             login({ username: response.data.username, role: response.data.role });

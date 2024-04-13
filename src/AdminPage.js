@@ -8,6 +8,7 @@ import Modal from './Modal';
 import UserForm from './UserForm';
 import UserDetailsModal from './UserDetailsModal';
 import EditUserModal from './EditUserModal'; // Asigură-te că acesta este importat corect
+import FeedbackTable from './FeedbackTable';
 
 
 function AdminPage() {
@@ -21,6 +22,18 @@ function AdminPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editUserData, setEditUserData] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [feedbacks, setFeedbacks] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/feedback')
+      .then(response => {
+        setFeedbacks(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching feedbacks:', error);
+      });
+  }, []);
+  
 
   useEffect(() => {
     axios.get('http://localhost:3000/users')
@@ -180,6 +193,8 @@ function AdminPage() {
       {selectedUser && (
         <UserDetailsModal user={selectedUser} onClose={() => setSelectedUser(null)} />
       )}
+      <FeedbackTable feedbacks={feedbacks} />
+
     </div>
   );
 }

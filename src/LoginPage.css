@@ -146,7 +146,7 @@ body {
 
 /* Stiluri îmbunătățite pentru containerul de login */
 .login-container {
-  background-color: #ffffff; /* Schimbă culoarea de fundal în alb sau o altă culoare deschisă */
+  background-color: #c9e4d9; /* Schimbă culoarea de fundal în alb sau o altă culoare deschisă */
   color: #333; /* Text de culoare închisă pentru contrast */
   border: 1px solid #ececec; /* Adaugă o bordură subtilă */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Umbra mai moale */

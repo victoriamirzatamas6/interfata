@@ -577,3 +577,214 @@
 .sidebar-lower button:last-child {
   margin-bottom: 0; /* Elimină margin-ul de jos pentru ultimul buton, dacă este necesar */
 }
+.message {
+  border-radius: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 12px;
+  padding: 10px 15px;
+}
+.message.user {
+  background-color: #5ca127;
+  align-self: flex-end;
+}
+
+.message.bot {
+  background-color: #5495a5;
+  align-self: flex-start;
+}
+
+.chat-footer input {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  width: calc(100% - 42px);
+}
+
+.chat-footer button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-footer button:hover {
+  background-color: #0056b3;
+}
+
+.sidebar {
+  overflow-y: auto;
+}
+.sidebar-button:hover {
+  background-color: #51cad3;
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .chat-container {
+    flex-direction: column;
+  }
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: messageIn 0.3s ease-out;
+}
+
+.faq-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ajustează conform nevoii */
+}
+
+.faq-modal {
+  background-color: #5e5c5c;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 700px; /* Ajustează conform nevoii */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Asigură că orice overflow este ascuns */
+  z-index: 1001;
+}
+/* Stiluri pentru conținutul modalului FAQ, care permite scroll-ul */
+.faq-content {
+  overflow-y: auto; /* Activează bara de scroll verticală dacă este necesar */
+  max-height: 700px; /* Ajustează înălțimea maximă conform nevoilor tale */
+}
+
+.faq-modal button {
+  align-self: center; /* Centrează butonul în modal */
+  margin-top: 20px; /* Adaugă spațiu deasupra butonului */
+}
+.faq-icon {
+  width: 24px; /* sau orice altă dimensiune preferi */
+  height: auto;
+  margin-right: 8px;
+}
+
+.faq-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.faq-modal {
+  width: 80%;
+  max-width: 500px;
+  background: rgb(65, 62, 62);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+}
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.faq-modal-backdrop {
+  animation: backdropFadeIn 0.5s ease;
+}
+
+.faq-modal {
+  animation: modalFadeIn 0.5s ease;
+}
+.faq-modal button {
+  background-color: #424240;
+  color: rgb(15, 15, 15);
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.faq-modal button:hover {
+  background-color: #5f6061;
+  transform: translateY(-2px);
+}
+@media (max-width: 600px) {
+  .faq-modal {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+/* feedback-form.css */
+form {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}

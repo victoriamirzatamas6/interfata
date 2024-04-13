@@ -165,3 +165,150 @@
         overflow-x: auto; /* Asigură-te că tabela este scrollabilă pe dispozitivele mici */
     }
 }
+
+.feedback-table-container {
+    width: 90%;
+    margin-top: 20px;
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6); /* Fundal semi-transparent pentru coerență */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.feedback-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.feedback-table th, .feedback-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.feedback-table th {
+    background-color: #485461; /* Utilizat pentru a se potrivi cu tabelul de utilizatori */
+    color: #d7dadc;
+}
+
+.feedback-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.feedback-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+/* AdminPage.css */
+.users-table-container {
+    width: auto; /* sau o lățime specifică, dacă preferați */
+    margin: 20px auto; /* Centrare pe orizontală */
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.users-table {
+    width: auto; /* Asigurați-vă că lățimea este setată la 'auto' sau la o valoare specifică pentru a se potrivi cu conținutul */
+    border-collapse: collapse;
+    margin: auto; /* Centrare tabel în interiorul containerului său */
+}
+
+.users-table th, .users-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.users-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.users-table td:last-child {
+    /* Ajustați lățimea coloanei 'Actions' pentru a se potrivi cu butoanele */
+    width: 1%; /* Oferă celulei o lățime mică pentru a nu permite spațiu inutil */
+    white-space: nowrap; /* Împiedică celula să se extindă peste conținutul său */
+}
+
+/* Continuarea codului CSS... */
+
+/* AdminPage.css */
+.users-table-container {
+    width: 80%; /* Ajustează acest procentaj pentru a face containerul mai lat */
+    min-width: 600px; /* Aici puteți seta o lățime minimă */
+    margin: 20px auto; /* Păstrează tabelul centrat */
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.users-table {
+    width: 100%; /* Asigură-te că tabelul umple întregul container */
+    border-collapse: collapse;
+    table-layout: fixed; /* Acest stil asigură că toate coloanele sunt de lățimi egale */
+}
+
+.users-table th, .users-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    overflow: hidden; /* Previne depășirea conținutului din celulă */
+    text-overflow: ellipsis; /* Adaugă trei puncte dacă textul este prea lung */
+}
+
+.users-table th {
+    background-color: #485461;
+    color: white;
+}
+
+/* ... Restul codului CSS ... */
+
+@media (max-width: 768px) {
+    .users-table-container {
+        width: 95%; /* Ajustează lățimea pentru ecrane mici */
+        min-width: 0; /* Resetare lățime minimă pentru ecrane mici */
+    }
+}
+
+/* AdminPage.css */
+/* ... Restul stilurilor tale ... */
+
+/* Stil pentru butonul 'New' */
+.new-user-button {
+    background-color: #4CAF50; /* Schimbă culoarea de fundal */
+  }
+  
+  .new-user-button:hover {
+    background-color: #45a049; /* Schimbă culoarea la hover */
+  }
+  
+  /* Stiluri pentru butoanele din acțiuni */
+  .action-buttons button.view {
+    background-color: #2196F3; /* Albastru pentru 'View' */
+  }
+  
+  .action-buttons button.edit {
+    background-color: #FFC107; /* Galben pentru 'Edit' */
+  }
+  
+  .action-buttons button.delete {
+    background-color: #f44336; /* Roșu pentru 'Delete' */
+  }
+  
+  /* Asigură-te că stilurile pentru stare hover oferă feedback vizual adecvat */
+  .action-buttons button.view:hover {
+    background-color: #1e88e5; /* Albastru mai închis la hover */
+  }
+  
+  .action-buttons button.edit:hover {
+    background-color: #ffa000; /* Galben mai închis la hover */
+  }
+  
+  .action-buttons button.delete:hover {
+    background-color: #e53935; /* Roșu mai închis la hover */
+  }
+  
