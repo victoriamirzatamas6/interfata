@@ -13,7 +13,7 @@ function FeedbackForm({ username }) {
         return;
       }
       try {
-        const response = await axios.post('http://3.79.246.189:8080/feedback', {
+        const response = await axios.post('http://localhost:3000/feedback', {
           text: feedback,
           username // Aici se utilizează prop-ul username
         });
