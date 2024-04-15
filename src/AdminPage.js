@@ -25,7 +25,7 @@ function AdminPage() {
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/feedback')
+    axios.get('https://3.120.29.124.nip.io/feedback')
       .then(response => {
         setFeedbacks(response.data);
       })
@@ -36,7 +36,7 @@ function AdminPage() {
   
 
   useEffect(() => {
-    axios.get('http://localhost:3000/users')
+    axios.get('https://3.120.29.124.nip.io/users')
       .then(response => {
         setUsers(response.data);
         setFilteredUsers(response.data); // Initialize filtered users with all users
@@ -63,7 +63,7 @@ function AdminPage() {
   };
 
   const addUser = (user) => {
-    axios.post('http://localhost:3000/users', {
+    axios.post('https://3.120.29.124.nip.io/users', {
       username: user.username,
       password: user.password,
       role: 'user'
@@ -81,7 +81,7 @@ function AdminPage() {
 
   const deleteUser = (username) => {
     if (window.confirm(`Are you sure you want to delete ${username}?`)) {
-      axios.delete(`http://localhost:3000/users/${username}`)
+      axios.delete(`https://3.120.29.124.nip.io/users/${username}`)
         .then(() => {
           const updatedUsers = users.filter(user => user.username !== username);
           setUsers(updatedUsers);
@@ -102,7 +102,7 @@ function AdminPage() {
   };
 
   const openUserDetailsModal = (user) => {
-    axios.get(`http://localhost:3000/user-details/${user.username}`)
+    axios.get(`https://3.120.29.124.nip.io/user-details/${user.username}`)
       .then(response => {
         setSelectedUser(response.data);
       })
@@ -117,7 +117,7 @@ function AdminPage() {
   };
 
   const updateUser = (username, updatedData) => {
-    axios.put(`http://localhost:3000/users/${username}`, updatedData)
+    axios.put(`https://3.120.29.124.nip.io/users/${username}`, updatedData)
       .then(response => {
         const newUsers = users.map(user => user.username === username ? { ...user, ...response.data } : user);
         setUsers(newUsers);
