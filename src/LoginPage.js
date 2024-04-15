@@ -28,7 +28,7 @@ function LoginPage() {
       toast.error('Both fields are required'); // Folosirea toast pentru eroare
     } else {
       setLoading(true); // Activăm animația de încărcare
-      axios.post('https://3.120.29.124.nip.io/login', { username, password })
+      axios.post('http://localhost:3000/login', { username, password })
         .then(response => {
           localStorage.setItem('authToken', response.data.token); // Salvăm token-ul JWT în local storage
           localStorage.setItem('username', username); // Salvăm numele de utilizator pentru a fi utilizat mai târziu

@@ -13,7 +13,7 @@ function FeedbackForm({ username }) {
         return;
       }
       try {
-        const response = await axios.post('https://3.120.29.124.nip.io/feedback', {
+        const response = await axios.post('http://localhost:3000/feedback', {
           text: feedback,
           username // Aici se utilizează prop-ul username
         });

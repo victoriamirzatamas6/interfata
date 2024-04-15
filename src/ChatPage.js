@@ -43,7 +43,7 @@ useEffect(() => {
       const authToken = localStorage.getItem('authToken');
       if (authToken) {
         try {
-          const response = await axios.get('https://3.120.29.124.nip.io/chatHistory', {
+          const response = await axios.get('http://localhost:3000/chatHistory', {
             headers: { Authorization: `Bearer ${authToken}` }
           });
           // Presupunând că răspunsul este un array de mesaje
@@ -69,7 +69,7 @@ useEffect(() => {
   
     try {
       // Presupunem că serverul poate gestiona un array de mesaje primit
-      await axios.post('https://3.120.29.124.nip.io/saveMessage', messagesToSave, {
+      await axios.post('http://localhost:3000/saveMessage', messagesToSave, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
     } catch (error) {
@@ -169,7 +169,7 @@ useEffect(() => {
 
   const fetchChatHistory = async () => {
     try {
-      const response = await axios.get('https://3.120.29.124.nip.io/chatHistory');
+      const response = await axios.get('http://localhost:3000/chatHistory');
       setMessages(response.data || []);
     } catch (error) {
       console.error('Eroare la preluarea istoricului de chat:', error);
@@ -241,7 +241,7 @@ useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (authToken && message.trim() !== '') {
       try {
-        await axios.post('https://3.120.29.124.nip.io/saveMessage', 
+        await axios.post('http://localhost:3000/saveMessage', 
           { message, sender },
           { headers: { "Authorization": `Bearer ${authToken}` } }
         );
