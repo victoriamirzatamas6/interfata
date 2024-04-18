@@ -283,7 +283,8 @@ useEffect(() => {
       setInput('');
       setIsLoading(true);
       try {
-        const response = await axios.post('http://10.198.82.154:8000/stream_chat', {
+        //const response = await axios.post('http://10.198.82.154:8000/stream_chat',
+        const response = await axios.post('http://10.198.82.147:8000/stream_chat', {
           content: trimmedInput,
           queries: messages.filter(m => m.sender === 'user').map(m => m.text),
           answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
