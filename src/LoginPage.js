@@ -32,7 +32,6 @@ function LoginPage() {
         .then(response => {
           localStorage.setItem('authToken', response.data.token); // Salvăm token-ul JWT în local storage
           localStorage.setItem('username', username); // Salvăm numele de utilizator pentru a fi utilizat mai târziu
-          //localStorage.setItem('authToken', response.data.token); // Salvăm token-ul
           setLoading(false); // Oprim animația de încărcare
           if (response.status === 200) {
             login({ username: response.data.username, role: response.data.role });
@@ -58,33 +57,49 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-container">
-      <ToastContainer position="top-center" autoClose={5000} />
-      <img src={tafbotImage} alt="TAFBot" className="tafbot-icon" />
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="login-button" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
+    <div 
+      className="login-page" 
+      style={{ 
+        backgroundImage: "url('https://wallpaperaccess.com/full/1900851.png')", 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      <div className="login-container">
+        <ToastContainer position="top-center" autoClose={5000} />
+        <img src={tafbotImage} alt="TAFBot" className="tafbot-icon" />
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="input-field"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-field"
+            />
+          </div>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+        {loading && <div className="loader"></div>}
+      </div>
     </div>
   );
 }

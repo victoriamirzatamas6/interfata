@@ -1,4 +1,3 @@
-// AdminPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './authContext';
@@ -7,9 +6,8 @@ import './AdminPage.css';
 import Modal from './Modal';
 import UserForm from './UserForm';
 import UserDetailsModal from './UserDetailsModal';
-import EditUserModal from './EditUserModal'; // Asigură-te că acesta este importat corect
+import EditUserModal from './EditUserModal';
 import FeedbackTable from './FeedbackTable';
-
 
 function AdminPage() {
   const [users, setUsers] = useState([]);
@@ -33,13 +31,12 @@ function AdminPage() {
         console.error('Error fetching feedbacks:', error);
       });
   }, []);
-  
 
   useEffect(() => {
     axios.get('http://localhost:3000/users')
       .then(response => {
         setUsers(response.data);
-        setFilteredUsers(response.data); // Initialize filtered users with all users
+        setFilteredUsers(response.data);
       })
       .catch(error => {
         console.error('Error fetching users:', error);
@@ -71,7 +68,6 @@ function AdminPage() {
     .then(response => {
       setUsers([...users, response.data]);
       setIsModalOpen(false);
-      // Immediately show the new user in the filtered list
       setFilteredUsers([...filteredUsers, response.data]);
     })
     .catch(error => {
@@ -85,7 +81,7 @@ function AdminPage() {
         .then(() => {
           const updatedUsers = users.filter(user => user.username !== username);
           setUsers(updatedUsers);
-          setFilteredUsers(updatedUsers); // Also update the filtered list
+          setFilteredUsers(updatedUsers);
           setSuccessMessage(`Deletion of ${username} was successful.`);
           setTimeout(() => {
             setSuccessMessage('');
@@ -121,7 +117,7 @@ function AdminPage() {
       .then(response => {
         const newUsers = users.map(user => user.username === username ? { ...user, ...response.data } : user);
         setUsers(newUsers);
-        setFilteredUsers(newUsers); // Ensure the filtered list is also updated
+        setFilteredUsers(newUsers);
         setIsEditModalOpen(false);
         setSuccessMessage(`Update of ${username} was successful.`);
         setTimeout(() => setSuccessMessage(''), 3000);
@@ -143,7 +139,7 @@ function AdminPage() {
       {successMessage && <div className="success-message">{successMessage}</div>}
       <div className="admin-header">
         <span className="username">Logged in as: {auth.username}</span>
-        <button onClick={handleLogout}>Logout</button>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
       <h1>User Management</h1>
       <input
@@ -151,31 +147,23 @@ function AdminPage() {
         placeholder="Search users..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-input"
       />
-      <button onClick={handleNewUser}>New</button>
-      <div className="users-table-container">
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map(user => (
-              <tr key={user._id}>
-                <td>{user.username}</td>
-                <td>{user.role}</td>
-                <td>
-                  <button onClick={() => openUserDetailsModal(user)}>View</button>
-                  <button onClick={() => openEditModal(user)}>Edit</button>
-                  <button onClick={() => deleteUser(user.username)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <button className="new-user-button" onClick={handleNewUser}>New</button>
+      <div className="users-cards-container">
+        {filteredUsers.map(user => (
+          <div key={user._id} className="user-card">
+            <div className="user-card-content">
+              <h3>{user.username}</h3>
+              <p>{user.role}</p>
+              <div className="action-buttons">
+                <button className="view" onClick={() => openUserDetailsModal(user)}>View</button>
+                <button className="edit" onClick={() => openEditModal(user)}>Edit</button>
+                <button className="delete" onClick={() => deleteUser(user.username)}>Delete</button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
       {isEditModalOpen && (
         <Modal onClose={closeModal}>
@@ -194,7 +182,7 @@ function AdminPage() {
         <UserDetailsModal user={selectedUser} onClose={() => setSelectedUser(null)} />
       )}
       <FeedbackTable feedbacks={feedbacks} />
-
+      
     </div>
   );
 }

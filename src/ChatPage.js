@@ -8,14 +8,12 @@ import newChatIcon from './assets/newchat.png';
 import tafbotImage from './assets/tafbot.png';
 import userLogo from './assets/user-logo.png';
 import botLogo from './assets/tafbot.png';
-import FAQModal from './FAQModal'; // Adaugă această linie
+import FAQModal from './FAQModal';
 import faqIcon from './assets/faq-icon.png';
 import hotjar from '@hotjar/browser';
 import FeedbackForm from './FeedbackForm';
 
-
 function ChatPage() {
-  
   const [currentChat, setCurrentChat] = useState('TAFBot');
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
@@ -25,18 +23,17 @@ function ChatPage() {
   const [typingIntervalId, setTypingIntervalId] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [showFAQModal, setShowFAQModal] = useState(false);
-  // La începutul fișierului ChatPage.js
   const hotjarId = process.env.REACT_APP_HOTJAR_ID;
   const hotjarVersion = process.env.REACT_APP_HOTJAR_SNIPPET_VERSION;
   const username = localStorage.getItem('username');
 
-useEffect(() => {
-  const hotjarId = process.env.REACT_APP_HOTJAR_ID; // Asigură-te că aceste variabile sunt setate corect în fișierul .env
-  const hotjarVersion = process.env.REACT_APP_HOTJAR_SNIPPET_VERSION; // De obicei versiunea este 6 pentru majoritatea utilizatorilor
-  if (hotjarId && hotjarVersion) {
-    hotjar.initialize(hotjarId, parseInt(hotjarVersion));
-  }
-}, []);
+  useEffect(() => {
+    const hotjarId = process.env.REACT_APP_HOTJAR_ID;
+    const hotjarVersion = process.env.REACT_APP_HOTJAR_SNIPPET_VERSION;
+    if (hotjarId && hotjarVersion) {
+      hotjar.initialize(hotjarId, parseInt(hotjarVersion));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -46,29 +43,26 @@ useEffect(() => {
           const response = await axios.get('http://localhost:3000/chatHistory', {
             headers: { Authorization: `Bearer ${authToken}` }
           });
-          // Presupunând că răspunsul este un array de mesaje
           setMessages(response.data);
         } catch (error) {
-          console.error('Eroare la preluarea istoricului de chat:', error);
+          console.error('Error fetching chat history:', error);
         }
       }
     };
-  
+
     fetchChatHistory();
   }, [navigate]);
 
- 
   const saveMessages = async (userMessage, botMessage) => {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) return;
-  
+
     const messagesToSave = [
       { message: userMessage, sender: 'user' },
       { message: botMessage, sender: 'bot' }
     ];
-  
+
     try {
-      // Presupunem că serverul poate gestiona un array de mesaje primit
       await axios.post('http://localhost:3000/saveMessage', messagesToSave, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
@@ -76,10 +70,9 @@ useEffect(() => {
       console.error('Could not save messages:', error);
     }
   };
-  
+
   const requestNotificationPermission = () => {
     Notification.requestPermission().then(permission => {
-      console.log("Permission:", permission);
       if (permission === "granted") {
         new Notification("Check Notifications", {
           body: "Receiving notifications works!",
@@ -88,74 +81,6 @@ useEffect(() => {
       }
     });
   };
-
-  // Salvarea mesajului utilizatorului și a răspunsului botului
-/*const saveMessages = async (userMessage, botMessage) => {
-  const authToken = localStorage.getItem('authToken');
-  if (!authToken) return;
-
-  // Construiește corpul cererii
-  const messagesToSave = [
-    { message: userMessage, sender: 'user' },
-    { message: botMessage, sender: 'bot' }
-  ];
-
-  try {
-    // Trimite o cerere POST pentru fiecare mesaj
-    for (let msg of messagesToSave) {
-      await axios.post('http://localhost:3000/saveMessage', msg, {
-        headers: { "Authorization": `Bearer ${authToken}` }
-      });
-    }
-  } catch (error) {
-    console.error('Could not save messages:', error);
-  }
-};*/
-
-
-  /*useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      fetchChatHistory(authToken); // Folosim tokenul pentru a face cererea de istoric
-    }
-  }, []); */
-  
-  /*useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      axios.get('http://localhost:3000/chatHistory', {
-        headers: {
-          "Authorization": `Bearer ${authToken}`
-        }
-      })
-      .then(response => {
-        setMessages(response.data); // Actualizează starea cu istoricul conversațiilor
-      })
-      .catch(error => console.error('Could not fetch chat history:', error));
-    }
-  }, []);
-  
-  */
-  useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (!authToken) {
-      // Utilizatorul nu este autentificat, deci navighează către pagina de autentificare
-      navigate('/login');
-    }
-  }, []);
-  useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      // Setează header-ul global de autorizare pentru Axios
-      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-
-      // Continuă să încarci istoricul de chat sau alte date necesare
-      fetchChatHistory();
-    } else {
-      // Navighează către pagina de login dacă nu există un token JWT
-      navigate('/login');
-    }
-  }, [navigate]);
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -172,33 +97,24 @@ useEffect(() => {
       const response = await axios.get('http://localhost:3000/chatHistory');
       setMessages(response.data || []);
     } catch (error) {
-      console.error('Eroare la preluarea istoricului de chat:', error);
+      console.error('Error fetching chat history:', error);
     }
   };
-  
 
   const handleExportConversations = () => {
-    // Convertiți conversațiile într-un format CSV
     const conversationCsv = messages.map(msg =>
-      `"${msg.sender === 'user' ? 'User' : 'TAFBot'}","${msg.text.replace(/"/g, '""')}"` // Dublați ghilimelele pentru a evita erorile în CSV
+      `"${msg.sender === 'user' ? 'User' : 'TAFBot'}","${msg.text.replace(/"/g, '""')}"`
     ).join('\n');
-  
-    // Crearea unui blob cu textul conversației în format CSV
+
     const blob = new Blob([conversationCsv], { type: 'text/csv;charset=utf-8;' });
-  
-    // Crearea unui URL pentru descărcare
     const url = URL.createObjectURL(blob);
-  
-    // Crearea unui element <a> temporar pentru a iniția descărcarea
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'conversation.csv'; // Numele fișierului
-    document.body.appendChild(a); // Adăugați elementul în document pentru a-l putea utiliza
-    a.click(); // Simulați un click pe element pentru a declanșa descărcarea
-  
-    // Curățați și eliminați elementul <a> după ce descărcarea a fost inițiată
+    a.download = 'conversation.csv';
+    document.body.appendChild(a);
+    a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url); // Eliberați memoria URL-ului creat
+    URL.revokeObjectURL(url);
   };
 
   useEffect(() => {
@@ -213,13 +129,11 @@ useEffect(() => {
       }
     };
   }, []);
-  // State și ref-uri
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  // Restul state-urilor și ref-urilor rămân neschimbate
 
   useEffect(() => {
-    // Cer permisiunea pentru notificări și ajustează scroll-ul
     Notification.requestPermission();
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
@@ -227,7 +141,6 @@ useEffect(() => {
   useEffect(() => {
     if (messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
-      // Asigură-te că ultimul mesaj este de la bot și că este final (nu temporar)
       if (lastMessage.sender === 'bot' && !lastMessage.temp && Notification.permission === "granted" && document.visibilityState === 'hidden') {
         new Notification("TAFBot is typing a response...", {
           body: lastMessage.text,
@@ -250,51 +163,22 @@ useEffect(() => {
       }
     }
   };
-  
-  
-
- /*const handleSendMessage = async () => {
-    const trimmedInput = input.trim();
-    if (trimmedInput && !isStopped) {
-      setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user' }]);
-      setInput('');
-      setIsLoading(true);
-      try {
-        const response = await axios.post('http://10.198.82.154:8000/stream_chat', {
-          content: trimmedInput,
-          queries: messages.filter(m => m.sender === 'user').map(m => m.text),
-          answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
-        });
-        setIsLoading(false);
-        const botMessage = response.data;
-        simulateTyping(botMessage);
-      } catch (error) {
-        setIsLoading(false);
-        console.error('There was an error sending the message to the chatbot:', error);
-        setMessages(prevMessages => [...prevMessages, { text: "Error: Could not connect to the chat service.", sender: 'bot' }]);
-      }
-    }
-  };*/
 
   const handleSendMessage = async () => {
     const trimmedInput = input.trim();
     if (trimmedInput && !isStopped) {
-      setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user' }]);
+      setMessages(prevMessages => [...prevMessages, { text: trimmedInput, sender: 'user', timestamp: new Date().toLocaleTimeString() }]);
       setInput('');
       setIsLoading(true);
       try {
-        //const response = await axios.post('http://10.198.82.154:8000/stream_chat',
-        const response = await axios.post('http://10.198.82.147:8000/stream_chat', {
+        const response = await axios.post('http://10.198.83.7:8080/stream_chat', {
           content: trimmedInput,
           queries: messages.filter(m => m.sender === 'user').map(m => m.text),
           answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
         });
         setIsLoading(false);
         const botMessage = response.data;
-  
-        // Salvează mesajul utilizatorului și răspunsul botului
         await saveMessages(trimmedInput, botMessage);
-  
         simulateTyping(botMessage);
       } catch (error) {
         setIsLoading(false);
@@ -303,26 +187,19 @@ useEffect(() => {
       }
     }
   };
-  
 
-
-
-
-  
   const simulateTyping = (botMessage) => {
     setIsTyping(true);
     let i = 0;
     const typingSpeed = 50;
     if (typingIntervalId) clearInterval(typingIntervalId);
-  
-    // Verifică dacă pagina este în background la începutul simulării
-    // și trimite o notificare o singură dată
+
     if (Notification.permission === "granted" && document.visibilityState === 'hidden') {
       new Notification("TAFBot is typing a response...", {
         icon: tafbotImage
       });
     }
-  
+
     const newTypingIntervalId = setInterval(() => {
       if (i < botMessage.length) {
         i++;
@@ -334,25 +211,18 @@ useEffect(() => {
         clearInterval(newTypingIntervalId);
         setIsTyping(false);
         setMessages(prevMessages => {
-          return prevMessages.filter(m => !m.temp).concat({ text: botMessage, sender: 'bot' });
+          return prevMessages.filter(m => !m.temp).concat({ text: botMessage, sender: 'bot', timestamp: new Date().toLocaleTimeString() });
         });
       }
     }, typingSpeed);
-  
+
     setTypingIntervalId(newTypingIntervalId);
   };
-  /*const handleBackToWelcome = () => {
-    navigate('/');
-  };
-*/
-  // Exemplu de funcție logout în componenta ta
-  const handleBackToWelcome = () => {
-  localStorage.removeItem('authToken'); // Elimină token-ul JWT
-  // Resetează orice stare relevantă / navighează utilizatorul către pagina de login
-  navigate('/login');
-};
 
-  
+  const handleBackToWelcome = () => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+  };
 
   const handleNewChat = () => {
     if (messages.length > 0) {
@@ -368,14 +238,14 @@ useEffect(() => {
     }
     setMessages([]);
   };
+
   const handleClearConversations = () => {
-    // Confirmă ștergerea conversațiilor
     const isConfirmed = window.confirm("Are you sure you want to clear all conversations?");
     if (isConfirmed) {
-        setMessages([]);
-        setSavedConversations([]);
+      setMessages([]);
+      setSavedConversations([]);
     }
-};
+  };
 
   const handleSelectConversation = (conversationId) => {
     const selectedConversation = savedConversations.find(conv => conv.id === conversationId);
@@ -383,27 +253,28 @@ useEffect(() => {
       setMessages(selectedConversation.messages);
     }
   };
+
   const handleStop = () => {
-    if (isLoading) setIsLoading(false); // Stop loading if necessary
+    if (isLoading) setIsLoading(false);
     if (isTyping) {
-      setIsTyping(false); // Stop typing simulation
+      setIsTyping(false);
       if (typingIntervalId) {
         clearInterval(typingIntervalId);
         setTypingIntervalId(null);
       }
-      // Remove temporary messages to clear the conversation
       setMessages(prevMessages => prevMessages.filter(m => !m.temp));
     }
   };
+
   useEffect(() => {
     if (input.length === 0) {
       setIsStopped(false);
     }
   }, [input]);
+
   return (
     <div className="chat-page">
       <div className="sidebar">
-        
         <div className="sidebar-button" onClick={handleNewChat}>
           <img src={newChatIcon} alt="New Chat" className="new-chat-icon" />
           New chat
@@ -414,66 +285,56 @@ useEffect(() => {
         </div>
         <div className="separator"></div>
         {savedConversations.map(conversation => (
-    <div key={conversation.id} className="sidebar-button" onClick={() => handleSelectConversation(conversation.id)}>
-      {conversation.title}
-    </div>
-    
-    
-  ))}
-  
-  
-  
+          <div key={conversation.id} className="sidebar-button saved-conversation" onClick={() => handleSelectConversation(conversation.id)}>
+            {conversation.title}
+          </div>
+        ))}
         <div className="sidebar-lower">
-        
-        <button id="request-permission-btn">Check notifications</button>
-  <button onClick={handleExportConversations}>Export Conversations as CSV</button>
+          <button id="request-permission-btn">Check notifications</button>
+          <button onClick={handleExportConversations}>Export Conversations as CSV</button>
           <div className="sidebar-button logout-container" onClick={handleBackToWelcome}>
             <img src={logOutIcon} alt="Log out" className="log-out-icon" />
             Log out
           </div>
-          
           <FeedbackForm username={username} />
-
         </div>
         <div className="sidebar-button" onClick={() => setShowFAQModal(true)}>
-  <img src={faqIcon} alt="FAQs" className="faq-icon" />
-  FAQs
-  </div>
-<FAQModal show={showFAQModal} onClose={() => setShowFAQModal(false)} />
- 
+          <img src={faqIcon} alt="FAQs" className="faq-icon" />
+          FAQs
+        </div>
+        <FAQModal show={showFAQModal} onClose={() => setShowFAQModal(false)} />
       </div>
-      
       <div className="chat-container">
         <div className="chat-header">
           <img src={tafbotImage} alt="TAFBot" className="tafbot-icon" />
           {currentChat}
         </div>
-        <div className="chat-messages">
+        <div className="chat-messages" ref={messagesEndRef}>
           {messages.map((message, index) => (
             <div key={index} className={`message ${message.sender}`}>
               {message.sender === 'user' ? (
                 <>
                   <img src={userLogo} alt="User" className="user-logo" />
                   <div className="message-text">{message.text}</div>
+                  <div className="message-timestamp">{message.timestamp}</div>
                 </>
               ) : (
                 <>
                   <img src={botLogo} alt="Bot" className="bot-logo" />
                   <div className="message-text">{message.text}</div>
+                  <div className="message-timestamp">{message.timestamp}</div>
                 </>
               )}
             </div>
           ))}
           {isLoading && (
-            
-  <div className="message loading-message">
-    
-    <div className="loading-dots" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-  <div style={{width: '8px', height: '8px', backgroundColor: '#9b8b8b', borderRadius: '50%', margin: '0 2px', animation: 'bounce 1.4s infinite ease-in-out both'}}></div>
-  <div style={{width: '8px', height: '8px', backgroundColor: '#9b8b8b', borderRadius: '50%', margin: '0 2px', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '-0.32s'}}></div>
-  <div style={{width: '8px', height: '8px', backgroundColor: '#9b8b8b', borderRadius: '50%', margin: '0 2px', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '-0.16s'}}></div>
-</div>
-  </div>
+            <div className="message loading-message">
+              <div className="loading-dots">
+                <div className="loading-dot"></div>
+                <div className="loading-dot"></div>
+                <div className="loading-dot"></div>
+              </div>
+            </div>
           )}
         </div>
         <div className="chat-footer">
@@ -483,19 +344,15 @@ useEffect(() => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
             placeholder={`Ask ${currentChat} a question...`}
-            disabled={isLoading} // Dezactivează inputul în timpul încărcării
+            disabled={isLoading}
           />
           <button onClick={(isLoading || isTyping) ? handleStop : handleSendMessage}>
-  {(isLoading || isTyping) ? 'Stop' : 'Send'}
-</button>
-
-          
+            {(isLoading || isTyping) ? 'Stop' : 'Send'}
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-
 
 export default ChatPage;

@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 .App {
   text-align: center;
-  background-image: url('https://wallpapercave.com/wp/wp7620177.jpg');
+  background: linear-gradient(135deg, #f06, #4a90e2);
   background-size: cover;
   background-position: center;
   color: white;
@@ -9,6 +11,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-header {
@@ -16,28 +19,59 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.logo {
-  max-width: 100%;
-  height: auto;
-  animation: fadeIn 0.5s ease-in-out forwards;
+.welcome-image {
+  width: auto;
+  height: 30vmin;
+  animation: fadeIn 1s ease-in-out forwards, pulse 2s ease-in-out infinite;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.App-header img {
-  width: auto;
-  height: 40vmin;
-  animation: float 6s ease-in-out infinite;
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+.welcome-text,
+.additional-text,
+.start-button {
+  opacity: 0;
+  animation: slideInUp 1s forwards;
+}
+
+.welcome-text.show {
+  animation-delay: 1.5s;
+  color: white; /* Adăugăm culoarea albă pentru textul de welcome */
+}
+
+.additional-text.show {
+  animation-delay: 2.5s;
+}
+
+.start-button.show {
+  animation-delay: 3.5s;
 }
 
 @keyframes slideInUp {
@@ -52,127 +86,62 @@
 }
 
 .welcome-text,
-.additional-text,
-.start-button {
-  opacity: 0; /* Inițial, elementele sunt invizibile */
-  transform: translateY(20px);
-  animation: slideInUp 1s forwards; /* Utilizează 'forwards' pentru a menține starea finală */
-}
-
-.welcome-text.show {
-  animation-delay: 1.5s; /* Întârziere specifică pentru textul de welcome */
-}
-
-.additional-text.show {
-  animation-delay: 2.5s; /* Întârziere specifică pentru textul adițional */
+.additional-text {
+  margin: 20px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .start-button {
   margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px 30px;
+  font-size: 18px;
   cursor: pointer;
-  background-color: #796615;
+  background-color: #c7926a; /* Portocaliu */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(151, 106, 72, 0.5);
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .start-button.show {
-  animation-delay: 3.5s; /* Întârziere specifică pentru buton */
-}
-
-.start-button:hover {
-  background-color: #b97433;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transform: scale(1.05);
-}
-
-/* Ajustări pentru responsivitate */
-@media (max-width: 768px) {
-  .App-header img {
-    height: 30vmin;
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.85;
-  }
-}
-.App-header img {
-  width: auto;
-  height: 37vmin;
-  animation: pulse 2s ease-in-out infinite;
-}
-.App-header {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* Ajustează contentul să înceapă de sus */
-  height: 100%; /* Asigură-te că .App-header ocupă întreaga înălțime a părintelui său */
-}
-
-.App-header img {
-  margin-top: 10vh; /* Ajustează această valoare ca să controlezi cât de sus vrei logo-ul */
-  width: auto;
-  height: 37vmin;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.additional-text {
-  animation-delay: 2.5s;
-}
-
-.start-button {
-  margin-bottom: 20px; /* Ajustează spațiu în partea de jos dacă este necesar */
   animation-delay: 3.5s;
 }
 
+.start-button:hover {
+  background-color: #e68d49;
+  transform: scale(1.1);
+}
 
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
+@media (max-width: 768px) {
+  .App-header {
+    padding: 20px;
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
+
+  .welcome-image {
+    height: 25vmin;
+  }
+
+  .welcome-text,
+  .additional-text {
+    font-size: 1.2em;
+  }
+
+  .start-button {
+    padding: 8px 20px;
+    font-size: 16px;
   }
 }
 
-
-.welcome-text,
-.additional-text,
-.start-button {
-  opacity: 0; /* Inițial, elementele sunt invizibile */
-  animation: slideInFromRight 1s forwards; /* Noua animație aplicată aici */
-}
-
-.welcome-text.show {
-  animation-delay: 1.5s; /* Întârziere specifică pentru textul de welcome */
-}
-
-.additional-text.show {
-  animation-delay: 2.5s; /* Întârziere specifică pentru textul adițional */
-}
-
-.start-button.show {
-  animation-delay: 3.5s; /* Întârziere specifică pentru buton */
-}
-
-/* Poziționarea textelor și butonului mai sus */
-.welcome-text,
-.additional-text {
-  margin-bottom: 5vh; /* Reducem spațiul de sub text pentru a-l aduce mai sus */
-}
-
-.start-button {
-  margin-bottom: 10vh; /* Ajustează acest spațiu pentru a controla cât de sus vrei butonul */
+/* Elemente grafice suplimentare */
+.additional-graphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background: url('https://www.transparenttextures.com/patterns/cubes.png');
+  opacity: 0.2;
 }

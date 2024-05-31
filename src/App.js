@@ -14,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate replace to="/login" />} />
+          
           <Route path="/login" element={<LoginPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/chat" element={<ChatPage />} />
@@ -25,3 +26,4 @@ function App() {
 }
 
 export default App;
+
