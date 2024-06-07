@@ -1107,4 +1107,17 @@ button:hover {
     width: 90%;
     margin: 5px 0;
   }
+
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  scroll-behavior: smooth;
+  height: calc(100% - 120px); /* Adjust this value based on your header and footer heights */
 }

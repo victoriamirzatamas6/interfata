@@ -171,7 +171,7 @@ function ChatPage() {
       setInput('');
       setIsLoading(true);
       try {
-        const response = await axios.post('http://10.198.83.7:8080/stream_chat', {
+        const response = await axios.post('http://10.198.83.7:8000/stream_chat', {
           content: trimmedInput,
           queries: messages.filter(m => m.sender === 'user').map(m => m.text),
           answers: messages.filter(m => m.sender === 'bot').map(m => m.text),
